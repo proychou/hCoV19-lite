@@ -226,7 +226,7 @@ fi
 
 
 # R script to make the consensus sequence 
-Rscript --vanilla hcov_make_seq_lite.R sampname=\"$sampname\" bamfname=\"$scaffname\" 
+Rscript --vanilla hcov_make_seq_lite.R sampname=\"$sampname\" bamfname=\"$mappedtoref_bam\" 
 
 
 printf "\n\n Done. Celebrate! \n\n\n"
