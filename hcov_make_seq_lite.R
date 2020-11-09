@@ -29,7 +29,7 @@ if(length(args)==0){
 #Generate consensus sequence -- this function is within wgs_functions.R (common to several viral WGS pipelines)
 conseq<-generate_consensus(bamfname)
 
-if(conseq==TRUE){
+if(!is.na(conseq)){
 	if(!dir.exists('./consensus_seqs')) dir.create('./consensus_seqs');
 	writeXStringSet(conseq,file=paste('./consensus_seqs/',sampname,'.fasta',sep=''),format='fasta');
 	
