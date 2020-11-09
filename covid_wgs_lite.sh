@@ -208,7 +208,7 @@ fi
 printf "\n\nMapping reads to reference ... \n\n\n"
 mkdir -p ./mapped_reads
 mappedtoref_bam='./mapped_reads/'$sampname'.bam'
-bowtie2 -x ./refs/$ref_bowtie -U $processed_fastq -p ${SLURM_CPUS_PER_TASK} | samtools view -bS - > $mappedtoref_bam
+bowtie2 -x ./refs/$ref_bowtie -U $processed_fastq -p ${SLURM_CPUS_PER_TASK} | samtools view -bS -F 4 - > $mappedtoref_bam
 samtools sort -@ ${SLURM_CPUS_PER_TASK} -o './mapped_reads/'$sampname'.sorted.bam' $mappedtoref_bam 
 rm $mappedtoref_bam 
 mv './mapped_reads/'$sampname'.sorted.bam' $mappedtoref_bam 
