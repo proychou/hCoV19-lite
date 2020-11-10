@@ -38,7 +38,7 @@ echo $@
 ref_fasta='./refs/NC_045512.2.fasta'
 ref_bowtie='NC_045512.2'
 
-if [-z $sampname]
+if [ -z $sampname ]
 then
 echo "Missing sample name."
 exit 1
@@ -103,6 +103,13 @@ fi
 if [[ $primer_trim == "true" ]]
 then
 printf "\n\nPrimer trimming ... \n\n\n"
+
+if [ -z $primerlist ]
+then
+printf "Missing primer list!"
+exit
+fi
+
 mkdir -p ./preprocessed_fastq
 tmp_fastq1=$processed_fastq1
 tmp_fastq2=$processed_fastq2
@@ -190,6 +197,13 @@ fi
 if [[ $primer_trim == "true" ]]
 then
 printf "\n\nPrimer trimming ... \n\n\n"
+
+if [ -z $primerlist ]
+then
+printf "Missing primer list!"
+exit
+fi
+
 mkdir -p ./preprocessed_fastq
 tmp_fastq=$processed_fastq
 processed_fastq='./preprocessed_fastq/'$sampname'_trimmed2.fastq.gz'
