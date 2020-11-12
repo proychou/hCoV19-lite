@@ -25,7 +25,7 @@ covid_wgs_pipeline.sh -1 yourreads_r1.fastq.gz -2 yourreads_r2.fastq.gz \
 ```
 For single-end library
 ```bash	
-covid_wgs_pipeline.sh -u yourreads.fastq.gz -s samplename -aqp
+covid_wgs_pipeline.sh -u yourreads.fastq.gz -s samplename -aq -p ./refs/swift_primers.fasta
 ```
 
 Options:
