@@ -36,7 +36,7 @@ printf "Input arguments:\n\n"
 echo $@
 
 ref_fasta='./refs/NC_045512.2.fasta'
-# ref_bowtie='NC_045512.2'
+ref_bowtie='NC_045512.2'
 
 if [ -z $sampname ]
 then
