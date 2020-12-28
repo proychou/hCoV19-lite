@@ -131,11 +131,17 @@ fi
 
 
 #Map reads to reference
-printf "\n\nMapping reads to reference ... \n\n\n"
+printf "\n\nMapping reads to sgRNAs and reference ... \n\n\n"
+
+mkdir -p ./mapped_sgRNAs
+mappedtosgrnas_bam='./mapped_sgRNAs/'$sampname'.bam'
+unmappedtosgrnas1='./mapped_sgRNAs/'$sampname'_unmapped_r1.fq'
+unmappedtosgrnas2='./mapped_sgRNAs/'$sampname'_unmapped_r2.fq'
+bbmap.sh in1=$processed_fastq1 in2=$processed_fastq2 outm=$mappedtosgrnas_bam outu1=$unmappedtosgrnas1 outu2=$unmappedtosgrnas2 ref=./refs/sgRNAs_120bp.fasta maxindel=50 strictmaxindel=T t=$SLURM_CPUS_PER_TASK
+
 mkdir -p ./mapped_reads
 mappedtoref_bam='./mapped_reads/'$sampname'.bam'
-# bowtie2 -x ./refs/$ref_bowtie -1 $processed_fastq1 -2 $processed_fastq2 -p ${SLURM_CPUS_PER_TASK} | samtools view -bS -F 4 - > $mappedtoref_bam
-bbmap.sh in1=$processed_fastq1 in2=$processed_fastq2 outm=$mappedtoref_bam ref=$ref_fasta maxindel=1000 sam=1.3
+bbmap.sh in1=$unmappedtosgrnas1 in2=$unmappedtosgrnas2 outm=$mappedtoref_bam ref=$ref_fasta t=$SLURM_CPUS_PER_TASK
 samtools sort -@ ${SLURM_CPUS_PER_TASK} -o './mapped_reads/'$sampname'.sorted.bam' $mappedtoref_bam 
 rm $mappedtoref_bam 
 mv './mapped_reads/'$sampname'.sorted.bam' $mappedtoref_bam 
@@ -218,7 +224,7 @@ printf "\n\nMapping reads to reference ... \n\n\n"
 mkdir -p ./mapped_reads
 mappedtoref_bam='./mapped_reads/'$sampname'.bam'
 # bowtie2 -x ./refs/$ref_bowtie -U $processed_fastq -p ${SLURM_CPUS_PER_TASK} | samtools view -bS -F 4 - > $mappedtoref_bam
-bbmap.sh in=$processed_fastq outm=$mappedtoref_bam ref=$ref_fasta maxindel=1000 sam=1.3
+bbmap.sh in=$processed_fastq outm=$mappedtoref_bam ref=$ref_fasta maxindel=1000 
 samtools sort -@ ${SLURM_CPUS_PER_TASK} -o './mapped_reads/'$sampname'.sorted.bam' $mappedtoref_bam 
 rm $mappedtoref_bam 
 mv './mapped_reads/'$sampname'.sorted.bam' $mappedtoref_bam 
